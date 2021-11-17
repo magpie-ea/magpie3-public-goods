@@ -43,18 +43,20 @@
           <SliderInput
             :tooltip="true"
             :max="training_stash"
-            :response.sync="measurements.amount"
+            :response.sync="$magpie.measurements.amount"
             left="0"
             :right="training_stash + ''"
           />
-          <template v-if="typeof measurements.amount !== 'undefined'">
+          <template v-if="typeof $magpie.measurements.amount !== 'undefined'">
             <p>
-              You are donating {{ measurements.amount }} tokens to the group.
+              You are donating {{ $magpie.measurements.amount }} tokens to the
+              group.
             </p>
             <button
               @click="
-                training_stash = training_stash - measurements.amount + reward;
-                nextSlide();
+                training_stash =
+                  training_stash - $magpie.measurements.amount + reward;
+                $magpie.nextSlide();
               "
             >
               Go
@@ -64,17 +66,17 @@
 
         <Slide>
           <p>Please wait for all participants to make their move.</p>
-          <Wait :time="4000" @done="nextSlide" />
+          <Wait :time="4000" @done="$magpie.nextSlide()" />
         </Slide>
 
         <Slide>
           <p>
-            You have donated {{ measurements.amount }} tokens and received
-            {{ reward }} tokens.
+            You have donated {{ $magpie.measurements.amount }} tokens and
+            received {{ reward }} tokens.
           </p>
           <p>Your new balance is {{ training_stash }}</p>
           <Record :data="{ reward }" />
-          <button @click="saveAndNextScreen()">Next round</button>
+          <button @click="$magpie.saveAndNextScreen()">Next round</button>
         </Slide>
       </Screen>
     </template>
@@ -85,7 +87,7 @@
           <WaitForParticipants
             @done="
               resetPool();
-              nextSlide();
+              $magpie.nextSlide();
             "
           />
           <p>Waiting for participants...</p>
@@ -97,18 +99,19 @@
           <SliderInput
             :tooltip="true"
             :max="test_stash"
-            :response.sync="measurements.amount"
+            :response.sync="$magpie.measurements.amount"
             left="0"
             :right="test_stash + ''"
           />
-          <template v-if="typeof measurements.amount !== 'undefined'">
+          <template v-if="typeof $magpie.measurements.amount !== 'undefined'">
             <p>
-              You are donating {{ measurements.amount }} tokens to the group.
+              You are donating {{ $magpie.measurements.amount }} tokens to the
+              group.
             </p>
             <button
               @click="
-                submitDonation(measurements.amount);
-                nextSlide();
+                submitDonation($magpie.measurements.amount);
+                $magpie.nextSlide();
               "
             >
               Go
@@ -127,14 +130,14 @@
 
         <Slide>
           <p>
-            You have donated {{ measurements.amount }} tokens and received
-            {{ reward }} tokens.
+            You have donated {{ $magpie.measurements.amount }} tokens and
+            received {{ reward }} tokens.
           </p>
           <p>Your new balance is {{ test_stash - amount + reward }}</p>
           <Record :data="{ reward }" />
           <button
             @click="
-              saveAndNextScreen();
+              $magpie.saveAndNextScreen();
               updateStash();
             "
           >
