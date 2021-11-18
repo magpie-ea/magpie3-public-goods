@@ -81,6 +81,8 @@
       </Screen>
     </template>
 
+    <ConnectInteractiveScreen />
+
     <template v-for="i of 5">
       <Screen :key="i">
         <Slide>
