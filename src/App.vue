@@ -82,9 +82,10 @@
     </template>
 
     <template v-for="i of 5">
-      <Screen :key="i" title="Training">
+      <Screen :key="i">
         <Slide>
           <WaitForParticipants
+            :number="numberParticipants"
             @done="
               resetPool();
               $magpie.nextSlide();
@@ -124,7 +125,7 @@
           <Wait
             v-if="donated === $magpie.socket.active.length"
             :time="0"
-            @done="nextSlide"
+            @done="$magpie.nextSlide()"
           />
         </Slide>
 
@@ -165,7 +166,8 @@ export default {
       pool: 0,
       donated: 0,
       test_stash: 100,
-      amount: 0
+      amount: 0,
+      numberParticipants: 2 // Adjust this to fit your needs
     };
   },
   socket: {
