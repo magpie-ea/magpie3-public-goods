@@ -181,7 +181,7 @@ export default {
   },
   computed: {
     reward() {
-      return (this.pool * 1.3) / this.donated;
+      return Math.round((this.pool * 1.3) / this.donated);
     }
   },
   methods: {
